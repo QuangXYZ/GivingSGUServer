@@ -22,6 +22,6 @@ public class User {
     private String phoneNumber;
     private String fullName;
     private String studentNumber;
-    private boolean isOrganization;
+    private String isOrganization;
 }
 
