@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Projects, Long> {
-    List<Projects> findByOrganizationId(Long organizationId);  // Tìm các dự án theo organizationId
 }
