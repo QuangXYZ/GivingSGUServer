@@ -23,7 +23,7 @@ public class GivingSguServerApplication {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
                     registry.addMapping("/**")
-                            .allowedOrigins("*")
+                            .allowedOrigins("https://givingsguserver-production.up.railway.app")
                             .allowedMethods("GET", "POST", "PUT", "DELETE")
                             .allowedHeaders("*");
                 }
