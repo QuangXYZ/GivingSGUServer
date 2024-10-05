@@ -28,7 +28,7 @@ public class User {
 
 
     @Column(name = "faculty_id", nullable = false)
-    private String facultyId;
+    private Long facultyId;
 
     @Column(nullable = false)
     private String fullName;
