@@ -1,6 +1,6 @@
 package com.sgu.givingsgu.controller;
 
-import com.sgu.givingsgu.model.Projects;
+import com.sgu.givingsgu.model.Project;
 import com.sgu.givingsgu.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +18,17 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public List<Projects> getAllProjects() {
+    public List<Project> getAllProjects() {
         return projectService.getAllProjects();
     }
 
     @PostMapping
-    public Projects createProject(@RequestBody Projects project) {
+    public Project createProject(@RequestBody Project project) {
         return projectService.saveProject(project);
     }
 
     @GetMapping("/{id}")
-    public Optional<Projects> getProjectById(@PathVariable Long id) {
+    public Optional<Project> getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id);
     }
 
@@ -38,16 +38,16 @@ public class ProjectController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Projects> partialUpdateProject(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<Project> partialUpdateProject(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
         // Tìm project theo ID và xử lý Optional
-        Optional<Projects> optionalProject = projectService.getProjectById(id);
+        Optional<Project> optionalProject = projectService.getProjectById(id);
 
         // Nếu project không tồn tại, trả về 404
         if (!optionalProject.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        Projects existingProject = optionalProject.get(); // Lấy project từ Optional
+        Project existingProject = optionalProject.get(); // Lấy project từ Optional
 
         // Duyệt qua các trường và cập nhật tương ứng
         updates.forEach((key, value) -> {
@@ -65,10 +65,10 @@ public class ProjectController {
                     existingProject.setEndDate((Date) value);
                     break;
                 case "targetAmount":
-                    existingProject.setTargetAmount((String) value);
+                    existingProject.setTargetAmount((Double) value);
                     break;
                 case "currentAmount":
-                    existingProject.setCurrentAmount((String) value);
+                    existingProject.setCurrentAmount((Double) value);
                     break;
                 case "status":
                     existingProject.setStatus((String) value);
@@ -76,8 +76,8 @@ public class ProjectController {
                 case "numberDonors":
                     existingProject.setNumberDonors((Integer) value);
                     break;
-                case "image":
-                    existingProject.setImage((String) value);
+                case "imageUrls":
+                    existingProject.setImageUrls((String) value);
                     break;
                 default:
                     // Không làm gì nếu trường không khớp
@@ -86,7 +86,7 @@ public class ProjectController {
         });
 
         // Lưu project sau khi cập nhật
-        Projects updatedProject = projectService.saveProject(existingProject);
+        Project updatedProject = projectService.saveProject(existingProject);
         return ResponseEntity.ok(updatedProject);
     }
 }
