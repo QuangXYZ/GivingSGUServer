@@ -1,6 +1,6 @@
 package com.sgu.givingsgu.service;
 
-import com.sgu.givingsgu.model.Projects;
+import com.sgu.givingsgu.model.Project;
 import com.sgu.givingsgu.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +14,15 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public List<Projects> getAllProjects() {
+    public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    public Optional<Projects> getProjectById(Long id) {
+    public Optional<Project> getProjectById(Long id) {
         return projectRepository.findById(id);
     }
 
-    public Projects saveProject(Projects project) {
+    public Project saveProject(Project project) {
         return projectRepository.save(project);
     }
 

@@ -12,18 +12,14 @@ import java.sql.Date;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Projects {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long projectId;
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;
-
     @Column(nullable = false)
     private String name;
 
-    @Column(length = 500)
     private String description;
 
     @Temporal(TemporalType.DATE)
@@ -33,17 +29,16 @@ public class Projects {
     private Date endDate;
 
     @Column(nullable = false)
-    private String targetAmount;
+    private Double targetAmount;
 
-    @Column(nullable = false)
-    private String currentAmount;
+    private Double currentAmount;
 
-    @Column(nullable = false)
     private String status;
 
     private int numberDonors;
 
-    @Column(length = 255)
-    private String image;
+    private String imageUrls;
 
+    @Column(name = "user_id", nullable = false)
+    private Long managedBy;  // Foreign Key referencing Users
 }
