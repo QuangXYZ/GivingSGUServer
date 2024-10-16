@@ -1,5 +1,6 @@
 package com.sgu.givingsgu.controller;
 
+import com.sgu.givingsgu.dto.CommentUserDTO;
 import com.sgu.givingsgu.model.Comment;
 import com.sgu.givingsgu.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class CommentController {
     @DeleteMapping("/{id}")
     public void deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
+    }
+
+    @GetMapping("/project/{projectId}")
+    public List<CommentUserDTO> getCommentsByProjectId(@PathVariable Long projectId) {
+        return commentService.getCommentsByProjectId(projectId);
     }
 }

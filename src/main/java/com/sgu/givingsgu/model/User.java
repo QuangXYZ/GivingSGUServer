@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +30,7 @@ public class User {
 
 
     @Column(name = "faculty_id", nullable = false)
-    private String facultyId;
+    private Long facultyId;
 
     @Column(nullable = false)
     private String fullName;
@@ -38,5 +40,10 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
+    private String imageUrl;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
 }
 
