@@ -16,8 +16,9 @@ public class Comment {
     private Long commentId;
 
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;      // Foreign Key referencing Users
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "project_id", nullable = false)
     private Long projectId;   // Foreign Key referencing Project
