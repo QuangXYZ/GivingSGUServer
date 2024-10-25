@@ -3,6 +3,7 @@ package com.sgu.givingsgu.controller;
 import com.sgu.givingsgu.model.Transaction;
 import com.sgu.givingsgu.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,10 +25,7 @@ public class TransactionController {
         return transactionService.getTransactionById(id);
     }
 
-    @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionService.saveTransaction(transaction);
-    }
+
 
     @PutMapping("/{id}")
     public Transaction updateTransaction(@PathVariable Long id, @RequestBody Transaction transactionDetails) {
@@ -38,4 +36,6 @@ public class TransactionController {
     public void deleteTransaction(@PathVariable Long id) {
         transactionService.deleteTransaction(id);
     }
+
+
 }

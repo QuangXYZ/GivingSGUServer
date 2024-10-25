@@ -17,8 +17,11 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    @Column(name = "donation_id", nullable = false)
-    private Long donationId;  // Foreign Key referencing Donations
+    @ManyToOne
+    @JoinColumn(name = "donation_id", nullable = false)
+    private Donation donation;  // Foreign Key referencing Donations
+
+    private double amount;
 
     @Temporal(TemporalType.DATE)
     private Date transactionDate;
