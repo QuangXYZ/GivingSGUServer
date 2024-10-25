@@ -6,6 +6,7 @@ import com.sgu.givingsgu.model.Transaction;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -20,4 +21,14 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             "GROUP BY u.userId, u.fullName, u.imageUrl " +
             "ORDER BY SUM(t.amount) DESC")
     List<TopDonorDTO> findTop10Donors(Pageable pageable);
+
+
+    @Query("SELECT new com.sgu.givingsgu.dto.TopDonorDTO(u.userId, u.fullName, u.imageUrl, SUM(t.amount)) " +
+            "FROM Transaction t " +
+            "JOIN t.donation d " +
+            "JOIN User u ON d.userId = u.userId " +
+            "WHERE d.projectId = :projectId " +
+            "GROUP BY u.userId, u.fullName, u.imageUrl " +
+            "ORDER BY SUM(t.amount) DESC")
+    List<TopDonorDTO> findTop10DonorsByProjectId(@Param("projectId") Long projectId, Pageable pageable);
 }

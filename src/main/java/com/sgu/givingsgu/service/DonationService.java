@@ -57,4 +57,9 @@ public class DonationService {
     public Donation findByUserIdAndProjectId(Long userId, Long projectId) {
         return donationRepository.findByUserIdAndProjectId(userId, projectId);
     }
+
+    public List<TopDonorDTO> getTop10DonorsByProjectId(Long projectId) {
+        Pageable pageable = PageRequest.of(0, 10); // Lấy 10 bản ghi đầu tiên
+        return transactionRepository.findTop10DonorsByProjectId(projectId, pageable);
+    }
 }

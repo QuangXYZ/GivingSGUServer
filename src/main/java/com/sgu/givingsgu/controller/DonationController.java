@@ -46,4 +46,10 @@ public class DonationController {
         List<TopDonorDTO> topDonors = donationService.getTop10Donors();
         return new ResponseEntity<>(topDonors, HttpStatus.OK);
     }
+
+    @GetMapping("/top10/{projectId}")
+    public ResponseEntity<List<TopDonorDTO>> getTop10Donors(@PathVariable Long projectId) {
+        List<TopDonorDTO> topDonors = donationService.getTop10DonorsByProjectId(projectId);
+        return new ResponseEntity<>(topDonors, HttpStatus.OK);
+    }
 }
