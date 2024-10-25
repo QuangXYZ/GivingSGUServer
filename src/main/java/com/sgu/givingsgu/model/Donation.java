@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -24,10 +25,10 @@ public class Donation {
     private Long userId;     // Foreign Key referencing Users
 
 
-    private Double amount;
-
     @Temporal(TemporalType.DATE)
     private Date donateDate;
 
-    private String status;
+
+    @OneToMany(mappedBy = "donation", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 }

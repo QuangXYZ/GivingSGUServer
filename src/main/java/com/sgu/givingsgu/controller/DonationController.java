@@ -1,8 +1,11 @@
 package com.sgu.givingsgu.controller;
 
+import com.sgu.givingsgu.dto.TopDonorDTO;
 import com.sgu.givingsgu.model.Donation;
 import com.sgu.givingsgu.service.DonationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +40,10 @@ public class DonationController {
     @PutMapping("/{id}")
     public Donation updateDonation(@PathVariable Long id, @RequestBody Donation donationDetails) {
         return donationService.updateDonation(id, donationDetails);
+    }
+    @GetMapping("/top10")
+    public ResponseEntity<List<TopDonorDTO>> getTop10Donors() {
+        List<TopDonorDTO> topDonors = donationService.getTop10Donors();
+        return new ResponseEntity<>(topDonors, HttpStatus.OK);
     }
 }

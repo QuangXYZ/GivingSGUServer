@@ -32,7 +32,7 @@ public class TransactionService {
     public Transaction updateTransaction(Long id, Transaction transactionDetails) {
         Transaction transaction = transactionRepository.findById(id).orElse(null);
         if (transaction != null) {
-            transaction.setDonationId(transactionDetails.getDonationId());
+            transaction.setDonation(transactionDetails.getDonation());
             transaction.setTransactionDate(transactionDetails.getTransactionDate());
             transaction.setPaymentMethod(transactionDetails.getPaymentMethod());
             transaction.setStatus(transactionDetails.getStatus());
