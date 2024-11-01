@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,10 +78,24 @@ public class ProjectController {
                     existingProject.setDescription((String) value);
                     break;
                 case "startDate":
-                    existingProject.setStartDate((Date) value);
+                    // Chuyển đổi String thành LocalDate
+                    try {
+                        LocalDate startDate = LocalDate.parse((String) value, DateTimeFormatter.ISO_LOCAL_DATE);
+                        existingProject.setStartDate(Date.valueOf(startDate));
+                    } catch (DateTimeParseException e) {
+                        // Xử lý lỗi nếu ngày không hợp lệ
+                        throw new RuntimeException("Invalid start date format.");
+                    }
                     break;
                 case "endDate":
-                    existingProject.setEndDate((Date) value);
+                    // Chuyển đổi String thành LocalDate
+                    try {
+                        LocalDate endDate = LocalDate.parse((String) value, DateTimeFormatter.ISO_LOCAL_DATE);
+                        existingProject.setEndDate(Date.valueOf(endDate));
+                    } catch (DateTimeParseException e) {
+                        // Xử lý lỗi nếu ngày không hợp lệ
+                        throw new RuntimeException("Invalid end date format.");
+                    }
                     break;
                 case "targetAmount":
                     existingProject.setTargetAmount((Double) value);
