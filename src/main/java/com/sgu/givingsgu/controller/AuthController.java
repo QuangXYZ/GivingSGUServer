@@ -1,6 +1,7 @@
 package com.sgu.givingsgu.controller;
 
 
+import com.sgu.givingsgu.dto.LoginResponse;
 import com.sgu.givingsgu.dto.ResponseWrapper;
 import com.sgu.givingsgu.service.JwtService;
 import com.sgu.givingsgu.service.UserService;
@@ -37,16 +38,19 @@ public class AuthController {
 
     // Endpoint để đăng nhập
     @PostMapping("/login")
-    public ResponseEntity<ResponseWrapper<String>> loginUser(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<ResponseWrapper<LoginResponse>> loginUser(@RequestParam String username, @RequestParam String password) {
         try {
             // Xác thực người dùng
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
             // Lấy thông tin người dùng và tạo JWT
             final UserDetails userDetails = userService.loadUserByUsername(username);
-
+            User user = userService.findByUsername(username);
             String token = jwtService.generateToken(userDetails.getUsername());
-            return ResponseEntity.ok(new ResponseWrapper<>(200, "Login successful", token));
+
+            LoginResponse loginResponse = new LoginResponse(user, token);
+
+            return ResponseEntity.ok(new ResponseWrapper<>(200, "Login successful", loginResponse));
 
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
