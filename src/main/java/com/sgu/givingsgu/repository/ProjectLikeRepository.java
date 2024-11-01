@@ -13,4 +13,7 @@ public interface ProjectLikeRepository extends JpaRepository<ProjectLike, Projec
 
     boolean existsByUserIdAndProjectId(Long userId, Long projectId); // Kiểm tra xem một user đã thích một project chưa
 
+    void deleteByUserIdAndProjectId(Long userId, Long projectId);
+
+    int countByProjectId(Long projectId);
 }
