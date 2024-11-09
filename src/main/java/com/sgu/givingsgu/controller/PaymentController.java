@@ -1,6 +1,7 @@
 package com.sgu.givingsgu.controller;
 
 import com.sgu.givingsgu.dto.PaymentRequest;
+import com.sgu.givingsgu.dto.ResponseWrapper;
 import com.sgu.givingsgu.model.Donation;
 import com.sgu.givingsgu.model.Transaction;
 import com.sgu.givingsgu.service.DonationService;
@@ -23,7 +24,7 @@ public class PaymentController {
     private TransactionService transactionService;
 
     @PostMapping("/process")
-    public ResponseEntity<String> processPayment(@RequestBody PaymentRequest request) {
+    public ResponseEntity<ResponseWrapper<Transaction>> processPayment(@RequestBody PaymentRequest request) {
         Donation donation = donationService.findByUserIdAndProjectId(request.getUserId(), request.getProjectId());
         if (donation == null) {
             donation = new Donation();
@@ -42,6 +43,6 @@ public class PaymentController {
         transaction.setStatus("SUCCESS");
         transaction.setToken(request.getToken());
         transactionService.saveTransaction(transaction);
-        return ResponseEntity.ok("Transaction processed successfully.");
+        return ResponseEntity.ok(new ResponseWrapper<>(200,"Transaction successful", transaction));
     }
 }
