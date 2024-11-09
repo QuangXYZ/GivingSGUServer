@@ -34,12 +34,14 @@ public class PaymentController {
         }
 
         Transaction transaction = new Transaction();
+        transaction.setAmount(request.getAmount());
+        transaction.setTransactionId(request.getTransactionId());
         transaction.setDonation(donation);
         transaction.setTransactionDate(new Date());
         transaction.setPaymentMethod(request.getPaymentMethod());
         transaction.setStatus("SUCCESS");
+        transaction.setToken(request.getToken());
         transactionService.saveTransaction(transaction);
-
         return ResponseEntity.ok("Transaction processed successfully.");
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Primary
 @Service
 public class UserService implements UserDetailsService {
@@ -46,5 +48,23 @@ public class UserService implements UserDetailsService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public void addPointsToUser(Long userId, int points) {
+        // Tìm người dùng theo userId
+        Optional<User> userOpt = userRepository.findById(userId);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            // Cộng điểm cho người dùng
+            int newPoints = user.getPoints() + points;
+            user.setPoints(newPoints);
+
+            // Lưu lại thay đổi vào database
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User with ID " + userId + " not found");
+        }
     }
 }

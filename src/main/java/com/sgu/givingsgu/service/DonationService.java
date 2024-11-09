@@ -20,6 +20,8 @@ public class DonationService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private UserService userService;
 
     public List<Donation> getAllDonations() {
         return donationRepository.findAll();
@@ -30,7 +32,9 @@ public class DonationService {
     }
 
     public Donation createDonation(Donation donation) {
-        donation.setDonateDate(new Date()); // Thiết lập ngày donate tự động
+        donation.setDonateDate(new Date());
+        userService.addPointsToUser(donation.getUserId(), 1000);
+
         return donationRepository.save(donation);
     }
 
