@@ -33,7 +33,6 @@ public class PaymentController {
             donation.setDonateDate(new Date());
             donationService.createDonation(donation);
         }
-
         Transaction transaction = new Transaction();
         transaction.setAmount(request.getAmount());
         transaction.setTransactionId(request.getTransactionId());
@@ -42,7 +41,6 @@ public class PaymentController {
         transaction.setPaymentMethod(request.getPaymentMethod());
         transaction.setStatus("SUCCESS");
         transaction.setToken(request.getToken());
-        transactionService.saveTransaction(transaction);
-        return ResponseEntity.ok(new ResponseWrapper<>(200,"Transaction successful", transaction));
+        return ResponseEntity.ok(new ResponseWrapper<Transaction>(200,"Transaction successful", transactionService.saveTransaction(transaction)));
     }
 }
