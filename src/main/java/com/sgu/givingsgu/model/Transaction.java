@@ -28,4 +28,5 @@ public class Transaction {
 
     private String paymentMethod;
     private String status;
+    private String token;
 }
