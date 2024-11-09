@@ -15,7 +15,7 @@ import java.util.Date;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "donation_id", nullable = false)
@@ -29,4 +29,5 @@ public class Transaction {
     private String paymentMethod;
     private String status;
     private String token;
+    private String transactionId;
 }
