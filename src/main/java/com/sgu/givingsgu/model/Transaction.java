@@ -1,5 +1,6 @@
 package com.sgu.givingsgu.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "donation_id", nullable = false)
+    @JsonBackReference
     private Donation donation;  // Foreign Key referencing Donations
 
     private double amount;
