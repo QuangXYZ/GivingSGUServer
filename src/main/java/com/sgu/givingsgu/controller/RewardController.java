@@ -3,9 +3,11 @@ package com.sgu.givingsgu.controller;
 
 
 import com.sgu.givingsgu.dto.ResponseWrapper;
+import com.sgu.givingsgu.model.Reward;
 import com.sgu.givingsgu.model.User;
 import com.sgu.givingsgu.model.UserReward;
 import com.sgu.givingsgu.service.RewardService;
+import com.sgu.givingsgu.service.UserRewardService;
 import com.sgu.givingsgu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class RewardController {
 
     @Autowired
     private RewardService rewardService;
+
+    @Autowired
+    private UserRewardService userRewardService;
 
 
     @PostMapping("/redeem")
@@ -44,7 +49,18 @@ public class RewardController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<ResponseWrapper<List<Reward>>> getAllRewards() {
+        List<Reward> rewards = rewardService.getAllRewards();
+        return ResponseEntity.ok(new ResponseWrapper<>(200, "Successful", rewards));
+    }
 
+
+    @GetMapping("/history/{userId}")
+    public ResponseEntity<ResponseWrapper<List<UserReward>>> getRewardHistory(@PathVariable Long userId) {
+        List<UserReward> rewards = userRewardService.getUserRewards(userId);
+        return ResponseEntity.ok(new ResponseWrapper<>(200, "Successful", rewards));
+    }
 
 }
 

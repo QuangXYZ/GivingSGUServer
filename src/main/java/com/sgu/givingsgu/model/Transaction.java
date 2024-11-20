@@ -20,7 +20,6 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "donation_id", nullable = false)
-    @JsonBackReference
     private Donation donation;  // Foreign Key referencing Donations
 
     private double amount;
