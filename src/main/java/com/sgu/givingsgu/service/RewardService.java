@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ public class RewardService {
                 UserReward userReward = new UserReward();
                 userReward.setUserId(user.getUserId());
                 userReward.setReward(reward);
-                userReward.setRedeemDate(LocalDateTime.now());
+                userReward.setRedeemDate(new Date());
                 userReward.setStatus("pending");
                 userRewardRepository.save(userReward);
 
