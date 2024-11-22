@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +26,8 @@ public class UserReward {
     private Reward reward;
 
     @Column(name = "redeem_date", nullable = false)
-    private LocalDateTime redeemDate;
+    @Temporal(TemporalType.DATE)
+    private Date redeemDate;
 
     @Column(name = "status", nullable = false)
     private String status;
