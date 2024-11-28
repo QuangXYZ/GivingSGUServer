@@ -62,5 +62,18 @@ public class RewardController {
         return ResponseEntity.ok(new ResponseWrapper<>(200, "Successful", rewards));
     }
 
+
+    @PostMapping("/confirm/{userRewardId}")
+    public ResponseEntity<ResponseWrapper<UserReward>> confirmReward(@PathVariable Long userRewardId) {
+        Optional<UserReward> userReward = userRewardService.confirmReward(userRewardId);
+        if (userReward.isPresent()) {
+            return ResponseEntity.ok(new ResponseWrapper<>(200, "Reward confirmed", userReward.get()));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseWrapper<>(400, "Reward not found or already confirmed", null));
+        }
+    }
+
+
 }
 
