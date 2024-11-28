@@ -67,4 +67,13 @@ public class ProjectService {
     }
 
 
+    public Project findById(Long projectId) {
+        return projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found with id: " + projectId));
+    }
+
+    // Lưu hoặc cập nhật dự án
+    public Project updateProject(Project project) {
+        return projectRepository.save(project);
+    }
 }
