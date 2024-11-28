@@ -32,8 +32,9 @@ public class User implements UserDetails {
     private String phoneNumber;
 
 
-    @Column(name = "faculty_id", nullable = false)
-    private Long facultyId;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", insertable = false, updatable = false)
+    private Faculty faculty;
 
     @Column(nullable = false)
     private String fullName;
