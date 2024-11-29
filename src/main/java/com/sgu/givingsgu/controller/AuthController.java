@@ -2,7 +2,10 @@ package com.sgu.givingsgu.controller;
 
 
 import com.sgu.givingsgu.dto.LoginResponse;
+import com.sgu.givingsgu.dto.RegisterRequest;
 import com.sgu.givingsgu.dto.ResponseWrapper;
+import com.sgu.givingsgu.model.Faculty;
+import com.sgu.givingsgu.repository.FacultyRepository;
 import com.sgu.givingsgu.service.JwtService;
 import com.sgu.givingsgu.service.UserService;
 import com.sgu.givingsgu.model.User;
@@ -29,11 +32,48 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FacultyRepository facultyRepository;
+
+
     // Endpoint để đăng ký người dùng mới
     @PostMapping("/register")
-    public ResponseEntity<ResponseWrapper<User>> registerUser(@RequestBody User user) {
-        userService.saveUser(user);
-        return ResponseEntity.ok(new ResponseWrapper<>(200, "User registered successfully", user));
+    public ResponseEntity<ResponseWrapper<User>> registerUser(@RequestBody RegisterRequest request) {
+        if (userService.existsByUsername(request.getUsername())) {
+            return ResponseEntity.badRequest().body(
+                    new ResponseWrapper<>(400, "Username đã tồn tại!", null)
+            );
+        }
+        if (userService.existsByEmail(request.getEmail())) {
+            return ResponseEntity.badRequest().body(
+                    new ResponseWrapper<>(400, "Email đã được sử dụng!", null)
+            );
+        }
+
+        // Lấy Faculty từ cơ sở dữ liệu
+        Faculty faculty = facultyRepository.findById(request.getFacultyId())
+                .orElseThrow(() -> new RuntimeException("Faculty không tồn tại!"));
+
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(request.getPassword());
+        user.setEmail(request.getEmail());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setFullName(request.getFullName());
+        user.setStudentId(request.getStudentId());
+        user.setRole("USER"); // Mặc định role là USER
+        user.setPoints(0); // Điểm ban đầu
+        user.setImageUrl(request.getImageUrl());
+        user.setFaculty(faculty); // Ánh xạ Faculty từ facultyId
+
+        // Lưu User vào cơ sở dữ liệu
+        User savedUser = userService.saveUser(user);
+
+        return ResponseEntity.ok(
+                new ResponseWrapper<>(200, "User registered successfully", savedUser)
+        );
+
+
     }
 
     // Endpoint để đăng nhập

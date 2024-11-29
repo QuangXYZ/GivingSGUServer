@@ -67,4 +67,13 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("User with ID " + userId + " not found");
         }
     }
+
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    // Kiểm tra email đã tồn tại
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

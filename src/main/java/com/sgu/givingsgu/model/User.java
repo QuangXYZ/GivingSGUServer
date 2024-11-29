@@ -33,7 +33,7 @@ public class User implements UserDetails {
 
 
     @ManyToOne
-    @JoinColumn(name = "faculty_id", insertable = false, updatable = false)
+    @JoinColumn(name = "faculty_id",nullable = false)
     private Faculty faculty;
 
     @Column(nullable = false)
