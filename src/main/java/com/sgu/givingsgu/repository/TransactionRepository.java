@@ -25,12 +25,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<TopDonorDTO> findTop10Donors(Pageable pageable);
 
 
-    @Query("SELECT new com.sgu.givingsgu.dto.TopDonorDTO(u.userId, u.fullName, u.imageUrl, SUM(t.amount)) " +
+    @Query("SELECT new com.sgu.givingsgu.dto.TopDonorDTO(u.userId, u.fullName, u.imageUrl, SUM(t.amount), d.donateDate) " +
             "FROM Transaction t " +
             "JOIN t.donation d " +
             "JOIN User u ON d.userId = u.userId " +
             "WHERE d.projectId = :projectId " +
-            "GROUP BY u.userId, u.fullName, u.imageUrl " +
+            "GROUP BY u.userId, u.fullName, u.imageUrl, d.donateDate " +
             "ORDER BY SUM(t.amount) DESC")
     List<TopDonorDTO> findTop10DonorsByProjectId(@Param("projectId") Long projectId, Pageable pageable);
 
