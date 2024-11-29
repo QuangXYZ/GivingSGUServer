@@ -46,7 +46,16 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
             "JOIN t.donation d " +
             "JOIN User u ON d.userId = u.userId " +
             "JOIN Faculty f ON u.faculty.facultyId = f.facultyId " +
-            "WHERE d.projectId = :projectId")
+            "WHERE d.projectId = :projectId " +
+            "ORDER BY t.transactionDate DESC")
     List<TransactionUserDTO> findTransactionsByProjectId(@Param("projectId") Long projectId, Pageable pageable);
+
+    @Query("SELECT COUNT(t) " +
+            "FROM Transaction t " +
+            "JOIN t.donation d " +
+            "WHERE d.projectId = :projectId")
+    long countTransactionsByProjectId(@Param("projectId") Long projectId);
 }
+
+
 

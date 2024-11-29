@@ -49,10 +49,13 @@ public class TransactionService {
 
 
     public Page<TransactionUserDTO> getTransactionsByProjectId(Long projectId, Pageable pageable) {
+
+        long totalTransactions = transactionRepository.countTransactionsByProjectId(projectId);
+
         return new PageImpl<>(
                 transactionRepository.findTransactionsByProjectId(projectId, pageable),
                 pageable,
-                transactionRepository.count() // Số lượng bản ghi
+                totalTransactions // Số lượng bản ghi
         );
     }
 }
