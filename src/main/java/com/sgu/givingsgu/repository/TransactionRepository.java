@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    @Query("SELECT new com.sgu.givingsgu.dto.TopDonorDTO(u.userId, u.fullName, u.imageUrl, SUM(t.amount)) " +
+    @Query("SELECT new com.sgu.givingsgu.dto.TopDonorDTO(u.userId, u.fullName, u.imageUrl, SUM(t.amount),  d.donateDate) " +
             "FROM Transaction t " +
             "JOIN t.donation d " +
             "JOIN User u ON d.userId = u.userId " +
